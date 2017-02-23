@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Simple Hotel</display-name>
+  <welcome-file-list>
+    <welcome-file>
+			/index.do
+	    </welcome-file>
+  </welcome-file-list>
+  <context-param>
+    <param-name>poolConfig</param-name>
+    <param-value>
+		    jdbcDriver=oracle.jdbc.driver.OracleDriver
+			jdbcUrl=jdbc:oracle:thin:@127.0.0.1:1521:XE
+			 
+			dbUser=system
+			dbPass=oracle
+			validationQuery=select 1
+			minIdle=3
+			maxTotal=30
+			poolName=shotel
+			poolingDriver=org.apache.commons.dbcp2.PoolingDriver
+			
+		</param-value>
+  </context-param>
+  <listener>
+    <listener-class>common.EnvListener</listener-class>
+  </listener>
+  <context-param>
+    <param-name>mapperEnv</param-name>
+    <param-value>
+			/WEB-INF/mapperEnv.properties
+		</param-value>
+  </context-param>
+  <servlet>
+    <servlet-name>HandlerDispatcher</servlet-name>
+    <servlet-class>handler.HandlerDispatcher</servlet-class>
+    <init-param>
+      <param-name>mapperHandler</param-name>
+      <param-value>
+                /WEB-INF/mapperHandler.properties
+            </param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HandlerDispatcher</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>FilterLoginCheck</filter-name>
+    <filter-class>common.FilterLoginCheck</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>FilterLoginCheck</filter-name>
+    <url-pattern>/memberDetail.do</url-pattern>
+    <url-pattern>/memberList.do</url-pattern>
+    <url-pattern>/memberDelete.do</url-pattern>
+    <url-pattern>/memberReserveDetail.do</url-pattern>
+    <url-pattern>/boardInsert.do</url-pattern>
+    <url-pattern>/BoardReplyInsert.do</url-pattern>
+    <url-pattern>/BoardReplyDelete.do</url-pattern>
+    <url-pattern>/reserveDelete.do</url-pattern>
+    <url-pattern>/reserveList.do</url-pattern>
+    <url-pattern>/reserveDetail.do</url-pattern>
+    <url-pattern>/adminRoomList.do</url-pattern>
+    <url-pattern>/adminMemberList.do</url-pattern>
+    <url-pattern>/adminMemberDetail.do</url-pattern>
+    <url-pattern>/adminRoomReserveList.do</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>FilterAuthCheck</filter-name>
+    <filter-class>common.FilterAuthCheck</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>FilterAuthCheck</filter-name>
+    <url-pattern>/adminRoomList.do</url-pattern>
+    <url-pattern>/adminMemberList.do</url-pattern>
+    <url-pattern>/adminMemberDetail.do</url-pattern>
+    <url-pattern>/adminRoomReserveList.do</url-pattern>
+  </filter-mapping>
+  <security-constraint>
+    <display-name>jsp protection</display-name>
+    <web-resource-collection>
+      <web-resource-name>SecureJSPPages</web-resource-name>
+      <url-pattern>*.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>nobody</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-role>
+    <description>can't access jsp files</description>
+    <role-name>nobody</role-name>
+  </security-role>
+  <error-page>
+    <error-code>401</error-code>
+    <location>/error/error401.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/error/error401.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error/error404.jsp</location>
+  </error-page>
+</web-app>

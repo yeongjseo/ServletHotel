@@ -1,0 +1,16 @@
+MJ호텔
+
+호텔 - 소개, 수상, 위치, 공지사항
+룸 - 각 룸 메뉴
+편의시설 - 연회장, 결혼식장, ...
+이벤트 - 진행중, 지난
+방명록 - 
+고객지원 - 자주하는 질문, 문의사항
+예약 
+관리자 - 회원, 공지사항, 이벤트, 방명록, 문의사항, 예약
+
+
+
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/common/css/main.css">
+
+${pageContext.request.contextPath}
